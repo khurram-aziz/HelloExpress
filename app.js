@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var model = require('./models/model');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -36,6 +38,8 @@ app.use(allowCrossDomain);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/api/v2', api);
+
+mongoose.connect('mongodb://localhost/invoices');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

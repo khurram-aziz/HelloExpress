@@ -1,2 +1,4 @@
 /node_modules
-/bin
+/.vs/HelloExpress/v14/.suo
+/bin/Microsoft.NodejsTools.WebRole.dll
+/obj/Debug
