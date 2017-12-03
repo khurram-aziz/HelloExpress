@@ -4,29 +4,21 @@ volumes:
         driver: local
 services:
     mongodb:
-        build:
-            context: .
-            dockerfile: Dockerfile.mongodb
-        image: khurram/mongo
-        #we can either name our container using container_name
-        #or use links: mongodb:mongodb; given our application has hardcoded mongodb host name
-        #for the connection string; docker-compose up will name this container
-        #probably helloexpress_mongodb_1
-        #container_name: mongodb
+        image: mongo
         volumes:
-        - mongo-data:/data/db
+            - mongo-data:/data/db
     helloexpress:
-        build:
-            context: .
-            dockerfile: Dockerfile.node
-        image: khurram/node
-        #container_name: helloexpress
+        image: node
+        user: node
+        working_dir: /app
+        environment:
+            - env=development
         volumes:
-        - /mnt/srcshare/HelloExpress:/app
-        entrypoint: nodejs /app/bin/www
+            - ./:/app
+        entrypoint: node /app/bin/www
         ports:
-        - "3000:3000"
+            - 3000:3000
         depends_on:
-        - mongodb
+            - mongodb
         links:
-        - mongodb:mongodb
+            - mongodb:mongodb
